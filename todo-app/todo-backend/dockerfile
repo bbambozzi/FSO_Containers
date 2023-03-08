@@ -1,0 +1,11 @@
+FROM node:latest
+
+WORKDIR /usr/bin/todo/
+
+COPY --chown=node:node . .
+
+RUN npm ci --production
+
+USER node
+
+CMD npm start
