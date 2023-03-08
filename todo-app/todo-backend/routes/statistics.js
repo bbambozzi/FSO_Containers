@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getAsync, setAsync } = require("../redis");
+const { getAsync } = require("../redis");
 
 router.get("/", async (req, res) => {
   const value = await getAsync("added_todos");
