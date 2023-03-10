@@ -1,0 +1,19 @@
+FROM node:16 as build-stage
+
+ENV REACT_APP_BACKEND_URL="http://localhost:3000"
+
+WORKDIR /usr/src/app/
+
+COPY --chown=node:node . . 
+
+USER node
+
+RUN npm run ci
+
+RUN npm run build
+
+FROM nginx:1.20-alpine
+
+COPY --from=build-stage /usr/src/app/build /usr/share/nginx/html
+
+## should be run on port different than 3000, say 3001:80, 80 being nginx
