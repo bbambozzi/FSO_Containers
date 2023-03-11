@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    container_name: frontend-dev
+  debug-helper:
+    image: busybox
+    ports:
+      - 9999:9999
+  nginx:
+    image: nginx
+    depends_on:
+      - frontend
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
