@@ -2,11 +2,15 @@ FROM node:16 as build-stage
 
 ENV REACT_APP_BACKEND_URL="http://localhost:3000"
 
+ENV CI='true'
+
 WORKDIR /usr/src/app/
 
 COPY --chown=node:node . . 
 
 USER node
+
+RUN npm run test --passWithNoTests
 
 RUN npm run ci
 

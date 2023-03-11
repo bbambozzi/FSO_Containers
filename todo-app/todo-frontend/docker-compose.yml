@@ -1,0 +1,22 @@
+services:
+  app:
+    image: todo-frontend
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    container_name: frontend
+  debug-helper:
+    image: busybox
+    container_name: debugger
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - debug-helper
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
