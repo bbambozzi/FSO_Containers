@@ -1,0 +1,14 @@
+FROM node:16 as base
+
+WORKDIR /usr/src/app/
+
+COPY --chown=node:node . . 
+
+RUN npm install
+
+RUN npm run buildts
+
+RUN npm ci --production
+
+CMD ["npm", "start"]
+
