@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./backend/
+    environment:
+      dockerfile: dev.dockerfile
+      BACKEND_PORT: 3001
+
+  frontend:
+      build:
+        context: ./frontend/
+        dockerfile: dev.dockerfile
+      environment:
+        BACKEND_URL: 'http://localhost:8080/api/'
+
+  nginx:
+    ports:
+      - 8080:80
+    image: nginx
+    depends_on: 
+      - server 
+      - frontend
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+ 

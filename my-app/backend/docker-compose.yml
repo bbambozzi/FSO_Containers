@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: dockerfile
+  nginx:
+    ports:
+      - 8080:81
+    image: nginx
+    depends_on: 
+      - server 
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+ 
